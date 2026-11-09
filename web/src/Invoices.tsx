@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import type { ColDef, ICellRendererParams } from 'ag-grid-community';
 import type { InvoiceSummary } from '../../shared/api';
-import { api } from './api';
+import { api, sessionId } from './api';
 import { gridTheme, shortDate, StatusChip, statusLabel, usdText } from './grid';
 import type { Settings } from './App';
 
@@ -36,11 +36,20 @@ export function Invoices({ settings, invoices, setInvoices, toast, goAgent }: Pr
     } catch (e) { setError((e as Error).message); } finally { setLoading(false); }
   }
 
+  const [live, setLive] = useState(false);
   useEffect(() => {
     for (const inv of invoices) last.current.set(inv.id, inv.status);
     refresh();
     const t = setInterval(() => refresh(true), 15_000);
-    return () => clearInterval(t);
+    // PayPal webhooks push invoice events at once; the poll above is the fallback.
+    const es = new EventSource(`/api/events?session=${encodeURIComponent(sessionId())}`);
+    es.onmessage = (m) => {
+      const e = JSON.parse(m.data) as { type: string; webhooks?: boolean };
+      if (e.type === 'hello') setLive(Boolean(e.webhooks));
+      else if (e.type === 'invoice') refresh(true);
+    };
+    es.onerror = () => setLive(false);
+    return () => { clearInterval(t); es.close(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -131,7 +140,7 @@ export function Invoices({ settings, invoices, setInvoices, toast, goAgent }: Pr
           <button className="btn" onClick={() => refresh()} disabled={loading}>{loading ? 'Refreshing…' : 'Refresh'}</button>
           {invoices.length < 3 ? <button className="btn" onClick={demo} disabled={busy === 'demo'}>{busy === 'demo' ? 'Adding…' : 'Add demo history'}</button> : null}
         </div>
-        <p className="hint">Straight from PayPal, refreshed every 15 seconds. Statuses change here when a client pays on PayPal's invoice page. {invoices.length < 3 ? '“Add demo history” creates four older sandbox invoices, some overdue, for the collections agent to work on.' : ''}</p>
+        <p className="hint">{live ? <span className="live">● Live</span> : null} Straight from PayPal: {live ? 'PayPal webhooks update this the moment a client pays, with a check every 15 seconds as a fallback.' : 'refreshed every 15 seconds.'} Statuses change here when a client pays on PayPal's invoice page. {invoices.length < 3 ? '“Add demo history” creates four older sandbox invoices, some overdue, for the collections agent to work on.' : ''}</p>
         <div className="grid-wrap auto">
           <AgGridReact<InvoiceSummary> theme={gridTheme} rowData={invoices} columnDefs={cols} getRowId={(p) => p.data.id} domLayout="autoHeight" quickFilterText={filter} tooltipShowDelay={200}
             overlayNoRowsTemplate="No invoices yet. Send one from New invoice, or add the demo history." defaultColDef={{ sortable: true, resizable: true }} />

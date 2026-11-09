@@ -25,7 +25,9 @@ export const config = {
     /** Invoices may only go to these email domains (sandbox accounts use example.com). */
     recipientDomains: env('RECIPIENT_DOMAINS', 'example.com').split(',').map((d) => d.trim().toLowerCase()).filter(Boolean)
   },
-  dataDir: env('DATA_DIR', 'data')
+  dataDir: env('DATA_DIR', 'data'),
+  /** This server's public https address; when set, Logbill registers a PayPal webhook for it. */
+  publicUrl: env('PUBLIC_URL').replace(/\/$/, '')
 };
 
 export function missingSettings(): string[] {

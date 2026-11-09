@@ -215,3 +215,4 @@ select.mini { padding: 5px 8px; font-size: 13px; max-width: 190px; flex: none; }
   .two-col, .agent-grid, .tiles { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
 }
+.live { color: var(--ok); font-weight: 700; margin-right: 4px; }

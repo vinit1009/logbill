@@ -11,6 +11,8 @@ export interface Health {
   invoicerEmail: string;
   demoRecipient: string;
   recipientDomains: string[];
+  /** True when PayPal webhooks reach this server, so payments show up at once. */
+  webhooks: boolean;
 }
 
 export interface DraftRequest { entries: TimeEntry[]; rateCents: number; client: string; business: string }

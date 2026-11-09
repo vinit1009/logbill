@@ -50,7 +50,7 @@ The demo only sends invoices to `example.com` addresses, the kind PayPal sandbox
 |---|---|
 | Send an invoice | Invoicing v2: `POST /v2/invoicing/invoices` (items in `HOURS`, payment terms, note, `reference`), `POST .../send` |
 | Pay | PayPal's hosted invoice page (PayPal, Venmo, Pay Later, cards) and `POST .../generate-qr-code` for a QR code |
-| Dashboard | `POST /v2/invoicing/search-invoices` filtered by the workspace `reference`, `GET .../invoices/{id}` |
+| Dashboard | `POST /v2/invoicing/search-invoices` filtered by the workspace `reference`, `GET .../invoices/{id}`; **Webhooks API**: Logbill registers its own webhook (`POST /v1/notifications/webhooks`) for `INVOICING.INVOICE.PAID`, `CANCELLED`, `REFUNDED` and `UPDATED`, checks each delivery's signature (SHA256withRSA over the CRC32 of the raw body, with PayPal's certificate; `verify-webhook-signature` as a fallback) and pushes the event to that workspace's browsers, so a payment shows up at once |
 | Remind and cancel | `POST .../remind`, `POST .../cancel` |
 | Collections agent | **PayPal Agent Toolkit** (`@paypal/agent-toolkit`, OpenAI tool format): `search_invoicing` and `get_invoice` to read, `send_invoice_reminder` to send, after Logbill's rules allow it |
 
@@ -84,6 +84,7 @@ You need Node 22 or newer, a PayPal sandbox app and an OpenRouter (or other Open
 | `AI_BASE_URL`, `AI_MODEL` | Optional; default `https://openrouter.ai/api/v1` and `anthropic/claude-haiku-5.5` |
 | `AI_DAILY_LIMIT` | Optional cap on AI calls per day (default 400) |
 | `RECIPIENT_DOMAINS` | Optional; email domains invoices may go to (default `example.com`) |
+| `PUBLIC_URL` | Optional; this server's public https address. When set, Logbill registers a PayPal webhook for it at startup |
 
 Without `AI_API_KEY`, drafts fall back to one line per project and the agent is off.
 

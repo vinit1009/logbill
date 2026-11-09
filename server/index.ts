@@ -9,12 +9,15 @@ import { AiUnavailable, aiConfigured, draftLines } from './ai.js';
 import { clientOf, runAgent, sendReminder, type AgentEvent } from './agent.js';
 import { PayPalError, cancelInvoice, createInvoice, deleteDraft, getInvoice, invoiceQr, invoicesFor, sendInvoice, type PayPalInvoice } from './paypal.js';
 import { REMINDABLE, overdueDays, remindersFor, today } from './reminders.js';
+import { ensureWebhook, receive, subscribe, webhookStatus } from './webhooks.js';
 import { addDays, auditDraft, buildDraft, paypalInvoice, rulesDraft, type InvoiceLine, type TermDays } from '../shared/core.js';
 import type { DraftResponse, Health, InvoiceSummary } from '../shared/api.js';
 
 const app = express();
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
+// PayPal's webhook needs the raw body for its signature, so it is registered before the JSON parser.
+app.post('/api/paypal/webhook', express.raw({ type: '*/*', limit: '1mb' }), (req, res) => { receive(req, res).catch((e) => { console.error('webhook failed', e); if (!res.headersSent) res.status(500).end(); }); });
 app.use(express.json({ limit: '2mb' }));
 
 // ---------- Workspaces ----------
@@ -101,7 +104,8 @@ app.get('/api/health', (_req, res) => {
   const missing = missingSettings();
   const body: Health = {
     ok: !missing.length, paypal: !missing.length, ai: aiConfigured(), model: config.ai.model, missing,
-    invoicerEmail: config.paypal.invoicerEmail, demoRecipient: config.demo.recipientEmail, recipientDomains: config.demo.recipientDomains
+    invoicerEmail: config.paypal.invoicerEmail, demoRecipient: config.demo.recipientEmail, recipientDomains: config.demo.recipientDomains,
+    webhooks: webhookStatus().registered
   };
   res.json(body);
 });
@@ -121,6 +125,13 @@ app.post('/api/draft', limit('draft', 40), wrap(async (req, res) => {
   }
   res.json(out);
 }));
+
+/** Invoice events from PayPal webhooks for this workspace, as Server-Sent Events. */
+app.get('/api/events', (req, res) => {
+  let reference: string;
+  try { reference = workspace(req); } catch (e) { res.status(400).json({ error: (e as Error).message }); return; }
+  subscribe(reference, res);
+});
 
 app.get('/api/invoices', wrap(async (req, res) => {
   const list = await invoicesFor(workspace(req));
@@ -221,5 +232,6 @@ app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
 
 app.listen(config.port, () => {
   const missing = missingSettings();
+  if (!missing.length && config.publicUrl) ensureWebhook().then((id) => console.log(`PayPal webhook ${id} for ${config.publicUrl}`)).catch((e) => console.warn('could not register the PayPal webhook:', e instanceof Error ? e.message : e));
   console.log(`Logbill on http://localhost:${config.port}${missing.length ? ` (missing: ${missing.join(', ')})` : ''}${aiConfigured() ? '' : ' (no AI key: drafts fall back to one line per project)'}`);
 });
