@@ -10,7 +10,7 @@ Logbill turns the hours a freelancer or small studio logged into a PayPal invoic
 
 ![Logbill: the AI draft, checked and editable in AG Grid](docs/draft.png)
 
-**Try it:** hosted demo at **https://44-212-131-104.sslip.io** (PayPal sandbox; no real money moves). **Demo video (2:51):** https://youtu.be/S4U6HEPcZtI . Devpost: https://devpost.com/software/logbill
+**Try it:** hosted demo at **https://logbill.vinitshah.dev** (PayPal sandbox; no real money moves). **Demo video (2:51):** https://youtu.be/S4U6HEPcZtI . Devpost: https://devpost.com/software/logbill
 
 | Collections agent (approve or autopilot) | Invoices, live from PayPal |
 |---|---|
@@ -59,7 +59,7 @@ The demo only sends invoices to `example.com` addresses, the kind PayPal sandbox
 - **AI**: Claude Haiku 5.5 (`anthropic/claude-haiku-5.5`) through OpenRouter's OpenAI-compatible API. Drafting uses a forced `submit_draft` tool call, so the answer is structured JSON validated with Zod, plus one correction round. The agent is a tool-calling loop over PayPal Agent Toolkit tools and three of Logbill's own (`reminder_history`, `propose_reminder`, `propose_no_action`). A typical draft costs about $0.002 and an agent run about $0.006. Any OpenAI-compatible endpoint works (`AI_BASE_URL`, `AI_MODEL`).
 - **PayPal**: REST Invoicing v2 and the PayPal Agent Toolkit, in the sandbox.
 - **AG Grid** (Community, v34): the timesheet grid with an in-cell select to move entries between lines, the editable invoice-lines grid (wrapping text, popup text editor, pinned totals row, live amounts with cell flash), and the invoices grid (status chips, overdue colouring, quick filter, pinned action column, tooltips, live refresh).
-- **Hosting**: the demo runs on an AWS EC2 t4g.micro with Caddy for HTTPS; `deploy/ec2-user-data.sh` sets it up, with secrets read from SSM Parameter Store. A Render Blueprint (`render.yaml`) is included as an alternative.
+- **Hosting**: the demo runs on an AWS EC2 t4g.micro with Caddy for HTTPS (Let's Encrypt) at logbill.vinitshah.dev; `deploy/ec2-user-data.sh` sets it up, with secrets read from SSM Parameter Store. A Render Blueprint (`render.yaml`) is included as an alternative.
 - Built with TypeScript, React 18, Vite, Express 5, Zod, Papa Parse and Vitest.
 
 ## Run it locally

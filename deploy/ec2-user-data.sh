@@ -3,7 +3,7 @@
 # Secrets come from SSM Parameter Store (/logbill/*) through the instance role, never from this script.
 set -euxo pipefail
 exec > >(tee -a /var/log/logbill-setup.log) 2>&1
-HOST="__HOST__"
+HOST="__HOST__"   # e.g. logbill.vinitshah.dev (an A record pointing at the Elastic IP) or <ip-with-dashes>.sslip.io
 REGION="us-east-1"
 
 dnf install -y git tar xz
