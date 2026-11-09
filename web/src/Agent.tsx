@@ -96,7 +96,7 @@ export function Agent({ settings, ai, toast, refreshInvoices }: Props) {
           </section>
           <section className="proposals">
             {reminders.map((c) => (
-              <article key={c.invoiceId} className={`proposal tone-${c.tone ?? 'friendly'} ${c.state}`}>
+              <article key={c.invoiceId} className={`proposal tone-${c.tone ?? 'friendly'} is-${c.state}`}>
                 <header>
                   <div><b>{c.client}</b><span className="sub">Invoice {c.number} · {usdText(c.dueAmount)} due{c.daysOverdue !== undefined ? ` · ${c.daysOverdue > 0 ? `${c.daysOverdue} days late` : c.daysOverdue === 0 ? 'due today' : `due in ${-c.daysOverdue} days`}` : ''}</span></div>
                   <span className={`chip chip-tone-${c.tone}`}>{c.tone}</span>

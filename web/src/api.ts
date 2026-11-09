@@ -3,9 +3,25 @@
 import type { DraftRequest, DraftResponse, Health, InvoiceSummary, RemindRequest, SendRequest } from '../../shared/api';
 
 const SESSION_KEY = 'logbill.session';
+const VALID = /^[a-z0-9-]{8,64}$/;
+
+// A workspace link (?ws=<id>) opens the same workspace in another browser; the id is then
+// taken out of the address bar.
+(() => {
+  const url = new URL(location.href);
+  const ws = (url.searchParams.get('ws') ?? '').toLowerCase();
+  if (!ws) return;
+  if (VALID.test(ws)) localStorage.setItem(SESSION_KEY, ws);
+  url.searchParams.delete('ws');
+  history.replaceState(null, '', url.pathname + url.search + url.hash);
+})();
+
+/** A link that opens this workspace elsewhere. */
+export const workspaceLink = (): string => `${location.origin}/?ws=${sessionId()}${location.hash}`;
+
 export function sessionId(): string {
   let id = localStorage.getItem(SESSION_KEY);
-  if (!id || !/^[a-z0-9-]{8,64}$/.test(id)) { id = crypto.randomUUID().toLowerCase(); localStorage.setItem(SESSION_KEY, id); }
+  if (!id || !VALID.test(id)) { id = crypto.randomUUID().toLowerCase(); localStorage.setItem(SESSION_KEY, id); }
   return id;
 }
 export function newWorkspace(): void { localStorage.setItem(SESSION_KEY, crypto.randomUUID().toLowerCase()); }

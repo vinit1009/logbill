@@ -194,8 +194,8 @@ select.mini { padding: 5px 8px; font-size: 13px; max-width: 190px; flex: none; }
 .proposal.tone-firm { border-left-color: #ea7a2c; }
 .proposal.tone-final { border-left-color: var(--bad); }
 .proposal.quiet { border-left-color: #c9bfae; }
-.proposal.sent { background: #f6fbf8; }
-.proposal.skipped { opacity: 0.6; }
+.proposal.is-sent { background: #f6fbf8; }
+.proposal.is-skipped { opacity: 0.6; }
 .proposal header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
 .proposal header div { display: flex; flex-direction: column; gap: 2px; }
 .proposal .sub { font-size: 13px; color: var(--ink-3); }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { Health, InvoiceSummary } from '../../shared/api';
-import { api, newWorkspace } from './api';
+import { api, newWorkspace, workspaceLink } from './api';
 import { NewInvoice } from './NewInvoice';
 import { Invoices } from './Invoices';
 import { Agent } from './Agent';
@@ -56,6 +56,7 @@ export function App() {
               </div>
               <label className="field"><span>Default rate ($/h)</span><input value={String(settings.defaultRate)} inputMode="decimal" onChange={(e) => setSettings({ ...settings, defaultRate: Number(e.target.value) || 0 })} /></label>
               <p className="hint">Invoices go out from the sandbox business account {health?.invoicerEmail ? <code>{health.invoicerEmail}</code> : null} under this name.</p>
+              <p className="hint">Open this workspace in another browser: <button className="link" onClick={() => { navigator.clipboard?.writeText(workspaceLink()); }}>copy its link</button></p>
               <div className="actions end">
                 <button className="btn btn-quiet" onClick={() => { if (window.confirm('Start a fresh workspace? Invoices from this one stay in PayPal but disappear from this browser.')) { newWorkspace(); location.reload(); } }}>Start a fresh workspace</button>
                 <button className="btn" onClick={() => setEditing(false)}>Done</button>
