@@ -12,6 +12,7 @@ interface Props { settings: Settings; invoices: InvoiceSummary[]; setInvoices: (
 
 const OPEN = new Set(['SENT', 'UNPAID', 'PARTIALLY_PAID']);
 const isPaid = (s: string) => s === 'PAID' || s === 'MARKED_AS_PAID';
+const NOTEWORTHY = new Set(['PAID', 'MARKED_AS_PAID', 'PARTIALLY_PAID', 'PAYMENT_PENDING', 'CANCELLED', 'REFUNDED', 'PARTIALLY_REFUNDED']);
 
 export function Invoices({ settings, invoices, setInvoices, toast, goAgent }: Props) {
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,8 @@ export function Invoices({ settings, invoices, setInvoices, toast, goAgent }: Pr
       const list = await api.invoices();
       for (const inv of list) {
         const before = last.current.get(inv.id);
-        if (before && before !== inv.status) toast(`Invoice ${inv.number} for ${inv.client} is now ${statusLabel(inv.status).toLowerCase()}.`);
+        // Only news worth interrupting for: money arriving, or an invoice closing.
+        if (before && before !== inv.status && NOTEWORTHY.has(inv.status)) toast(`Invoice ${inv.number} for ${inv.client} is now ${statusLabel(inv.status).toLowerCase()}.`);
         last.current.set(inv.id, inv.status);
       }
       setInvoices(list); setError('');

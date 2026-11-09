@@ -10,7 +10,7 @@ Logbill turns the hours a freelancer or small studio logged into a PayPal invoic
 
 ![Logbill: the AI draft, checked and editable in AG Grid](docs/draft.png)
 
-**Try it:** hosted demo at **https://44-212-131-104.sslip.io** (PayPal sandbox; no real money moves). Demo video: see the Devpost page.
+**Try it:** hosted demo at **https://44-212-131-104.sslip.io** (PayPal sandbox; no real money moves). **Demo video (2:51):** https://youtu.be/S4U6HEPcZtI . Devpost: https://devpost.com/software/logbill
 
 | Collections agent (approve or autopilot) | Invoices, live from PayPal |
 |---|---|
