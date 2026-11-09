@@ -1,0 +1,22 @@
+# Render Blueprint: one free web service that builds the web app and serves it with the API.
+services:
+  - type: web
+    name: logbill
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: PAYPAL_INVOICER_EMAIL
+        sync: false
+      - key: AI_API_KEY
+        sync: false
+      - key: AI_DAILY_LIMIT
+        value: "400"

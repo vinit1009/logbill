@@ -1,0 +1,45 @@
+{
+  "name": "logbill",
+  "version": "0.1.0",
+  "description": "Turn logged hours into PayPal invoices: AI drafts client-ready invoice lines from a timesheet, you edit them in a grid, Logbill sends the PayPal invoice and chases it.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n api,web \"tsx watch --env-file-if-exists=.env server/index.ts\" \"vite --config web/vite.config.ts\"",
+    "build": "vite build --config web/vite.config.ts",
+    "start": "NODE_ENV=production tsx --env-file-if-exists=.env server/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@paypal/agent-toolkit": "^1.11.0",
+    "ag-grid-community": "^34.3.1",
+    "ag-grid-react": "^34.3.1",
+    "express": "^5.3.0",
+    "papaparse": "^5.7.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsx": "^4.23.15",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.19.2",
+    "@types/papaparse": "^5.5.2",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.2.0",
+    "concurrently": "^9.2.5",
+    "typescript": "5.9",
+    "vite": "^7.3.7",
+    "vitest": "^4.1.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vinit1009/logbill"
+  }
+}

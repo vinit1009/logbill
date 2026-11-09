@@ -1,0 +1,36 @@
+Project,Client,Description,User,Billable,Start Date,Duration (h),Billable Rate (USD)
+Website redesign,Juniper Lane Dental,"Kickoff call with the Juniper Lane team: goals, pages, booking needs",Maya Ortiz,Yes,10/01/2026,01:00:00,95.00
+Website redesign,Juniper Lane Dental,Kickoff call with the Juniper Lane team,Jonah Reyes,Yes,10/01/2026,01:00:00,120.00
+Website redesign,Juniper Lane Dental,"Reviewed competitor sites and the patient journey, drafted the sitemap",Maya Ortiz,Yes,10/02/2026,02:30:00,95.00
+Website redesign,Juniper Lane Dental,Homepage wireframes v1,Maya Ortiz,Yes,10/05/2026,03:15:00,95.00
+Website redesign,Juniper Lane Dental,Homepage wireframes v2 after feedback; services page wireframe,Maya Ortiz,Yes,10/06/2026,02:45:00,95.00
+Website redesign,Juniper Lane Dental,Set up the staging site and repository,Jonah Reyes,Yes,10/06/2026,01:30:00,120.00
+Website redesign,Juniper Lane Dental,Timesheet cleanup and invoice prep,Maya Ortiz,Yes,10/07/2026,00:30:00,95.00
+Website redesign,Juniper Lane Dental,"Visual design: homepage high-fidelity, colour and type system",Maya Ortiz,Yes,10/08/2026,04:00:00,95.00
+Website redesign,Juniper Lane Dental,Visual design: services and team pages,Maya Ortiz,Yes,10/09/2026,03:30:00,95.00
+Online booking,Juniper Lane Dental,Compared three online booking providers' APIs and recommended one,Jonah Reyes,Yes,10/09/2026,02:00:00,120.00
+Online booking,Juniper Lane Dental,Booking API sandbox: sign-in and availability endpoint,Jonah Reyes,Yes,10/12/2026,03:00:00,120.00
+Online booking,Juniper Lane Dental,"Booking widget: date and time picker, filter by dentist",Jonah Reyes,Yes,10/13/2026,04:30:00,120.00
+Online booking,Juniper Lane Dental,"Booking widget: date and time picker, filter by dentist",Jonah Reyes,Yes,10/13/2026,04:30:00,120.00
+Website redesign,Juniper Lane Dental,Client review call: homepage design sign-off,Maya Ortiz,Yes,10/14/2026,00:45:00,95.00
+Website redesign,Juniper Lane Dental,Fixed my own typo that broke the staging deploy (not billable),Jonah Reyes,Yes,10/14/2026,00:40:00,120.00
+Website redesign,Juniper Lane Dental,Built the homepage and services templates (responsive),Jonah Reyes,Yes,10/15/2026,05:00:00,120.00
+Website redesign,Juniper Lane Dental,"Built the team and contact pages, map embed",Jonah Reyes,Yes,10/16/2026,03:30:00,120.00
+Website redesign,Juniper Lane Dental,Lunch with a former colleague,Maya Ortiz,No,10/16/2026,01:00:00,95.00
+Online booking,Juniper Lane Dental,Booking flow: confirmation emails and text reminders,Jonah Reyes,Yes,10/19/2026,04:00:00,120.00
+Online booking,Juniper Lane Dental,Booking flow: insurance question step and validation,Jonah Reyes,Yes,10/20/2026,03:15:00,120.00
+Website redesign,Juniper Lane Dental,Photo selection and image optimisation for all pages,Maya Ortiz,Yes,10/20/2026,02:00:00,95.00
+Website redesign,Juniper Lane Dental,"Accessibility pass: contrast, focus states, alt text",Maya Ortiz,Yes,10/21/2026,02:30:00,95.00
+Website redesign,Juniper Lane Dental,stuff,Jonah Reyes,Yes,10/21/2026,01:15:00,120.00
+Website redesign,Juniper Lane Dental,Content migration from the old site (12 pages),Jonah Reyes,Yes,10/22/2026,03:45:00,120.00
+Website redesign,Juniper Lane Dental,"Content migration continued: 40 blog posts, redirects list",Jonah Reyes,Yes,10/22/2026,07:30:00,120.00
+Website redesign,Juniper Lane Dental,"Performance: lazy-loaded images, caching, page speed fixes",Jonah Reyes,Yes,10/23/2026,02:30:00,120.00
+Online booking,Juniper Lane Dental,Fixed a booking time-zone bug found in testing,Jonah Reyes,Yes,10/24/2026,02:00:00,120.00
+Website redesign,Juniper Lane Dental,"Design QA on staging, logged 18 fixes",Maya Ortiz,Yes,10/26/2026,02:15:00,95.00
+Website redesign,Juniper Lane Dental,Fixes from the design QA,Jonah Reyes,Yes,10/26/2026,03:00:00,120.00
+Website redesign,Juniper Lane Dental,"Launch: DNS, SSL, redirects from old URLs, uptime monitoring",Jonah Reyes,Yes,10/27/2026,02:30:00,120.00
+Website redesign,Juniper Lane Dental,Launch support and final walkthrough with the client,Maya Ortiz,Yes,10/27/2026,01:30:00,95.00
+Website redesign,Juniper Lane Dental,Proposal call with Cedar Grove Physio (new prospect),Maya Ortiz,Yes,10/28/2026,01:00:00,95.00
+Website redesign,Juniper Lane Dental,"Handover guide: editing pages, managing bookings",Jonah Reyes,Yes,10/29/2026,01:45:00,120.00
+Website redesign,Juniper Lane Dental,Training session for front-desk staff on updating content,Maya Ortiz,Yes,10/29/2026,01:00:00,95.00
+Website redesign,Juniper Lane Dental,Watched an online course on design tokens,Maya Ortiz,Yes,10/30/2026,01:30:00,95.00
